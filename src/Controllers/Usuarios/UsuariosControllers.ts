@@ -5,26 +5,21 @@ import { UsuariosServices } from '../../Services/Usuarios/UsuariosServices'
 class UsuariosControllers {
     async cadastrarUsuarios(req: Request, res: Response) {
         const { nome, email, cep, rua, numero, bairro, cidade, uf, password } = req.body;
-        if(!req.file) {
-            throw new Error('Imagem com problemas')
-        } else {
-            const {originalname, filename: banner} = req.file;
-            const enviarDadosServices = new UsuariosServices()
-            const resposta = await enviarDadosServices.cadastrarUsuarios({
-                nome,
-                email,
-                cep,
-                rua,
-                numero,
-                bairro,
-                cidade,
-                uf,
-                password,
-                banner
-            })
-            return res.json(resposta)
-
-        };
+        const banner = req.file ? req.file.filename : null;
+        const enviarDadosServices = new UsuariosServices()
+        const resposta = await enviarDadosServices.cadastrarUsuarios({
+            nome,
+            email,
+            cep,
+            rua,
+            numero,
+            bairro,
+            cidade,
+            uf,
+            password,
+            banner
+        })
+        return res.json(resposta)
     }
 
     async consultarUsuarios(req: Request, res: Response) {
