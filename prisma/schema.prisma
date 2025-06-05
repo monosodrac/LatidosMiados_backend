@@ -13,7 +13,8 @@ datasource db {
 // }
 
 model Usuarios {
-  id     String @id @default(uuid())
+  id     String  @id @default(uuid())
+  foto   String?
   nome   String
   email  String
   cep    String?
@@ -23,7 +24,6 @@ model Usuarios {
   cidade String?
   estado String?
   senha  String
-  banner String?
 
   carrinho Carrinho[]
 
