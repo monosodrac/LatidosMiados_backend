@@ -13,17 +13,18 @@ datasource db {
 // }
 
 model Usuarios {
-  id     String  @id @default(uuid())
-  foto   String?
-  nome   String
-  email  String
-  cep    String?
-  rua    String?
-  numero String?
-  bairro String?
-  cidade String?
-  estado String?
-  senha  String
+  id       String  @id @default(uuid())
+  foto     String?
+  nome     String
+  email    String
+  telefone String
+  cep      String?
+  rua      String?
+  numero   String?
+  bairro   String?
+  cidade   String?
+  estado   String?
+  senha    String
 
   carrinho Carrinho[]
 

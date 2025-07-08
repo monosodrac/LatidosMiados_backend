@@ -4,13 +4,14 @@ import { UsuariosServices } from '../../Services/Usuarios/UsuariosServices'
 
 class UsuariosControllers {
     async cadastrarUsuarios(req: Request, res: Response) {
-        const { nome, email, cep, rua, numero, bairro, cidade, uf, password } = req.body;
+        const { nome, email, telefone, cep, rua, numero, bairro, cidade, uf, password } = req.body;
         const foto = req.file ? req.file.filename : null;
         const enviarDadosServices = new UsuariosServices()
         const resposta = await enviarDadosServices.cadastrarUsuarios({
             foto,
             nome,
             email,
+            telefone,
             cep,
             rua,
             numero,

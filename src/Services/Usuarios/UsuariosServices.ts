@@ -4,14 +4,15 @@ import { hash } from 'bcryptjs'
 interface cadUsuarios {
     nome: string,
     email: string,
-    cep: string
-    rua: string
-    numero: string
-    bairro: string
-    cidade: string
-    uf: string
+    telefone: string,
+    cep?: string
+    rua?: string
+    numero?: string
+    bairro?: string
+    cidade?: string
+    uf?: string
     password: string
-    foto: string
+    foto?: string
 }
 
 interface AlterarUsuarios {
@@ -27,13 +28,14 @@ interface AlterarUsuarios {
 }
 
 class UsuariosServices {
-    async cadastrarUsuarios({ nome, email, cep, rua, numero, bairro, cidade, uf, password, foto }: cadUsuarios) {
+    async cadastrarUsuarios({ nome, email, telefone, cep, rua, numero, bairro, cidade, uf, password, foto }: cadUsuarios) {
 
         const senhaCrypt = await hash(password, 8)
         await prismaClient.usuarios.create({
             data: {
                 nome: nome,
                 email: email,
+                telefone: telefone,
                 cep: cep,
                 rua: rua,
                 numero: numero,
