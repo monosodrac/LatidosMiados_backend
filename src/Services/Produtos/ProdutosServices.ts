@@ -2,7 +2,7 @@ import prismaClient from '../../Prisma'
 
 interface CadProdutos {
     nome: string
-    descricao: string
+    descricao?: string
     preco: string
     banner: string
 }

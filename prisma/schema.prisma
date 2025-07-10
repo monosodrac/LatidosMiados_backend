@@ -13,42 +13,40 @@ datasource db {
 // }
 
 model Usuarios {
-  id       String  @id @default(uuid())
-  foto     String?
-  nome     String
-  email    String
-  telefone String
-  cep      String?
-  rua      String?
-  numero   String?
-  bairro   String?
-  cidade   String?
-  estado   String?
-  senha    String
+  id          String  @id @default(uuid())
+  foto        String?
+  nome        String
+  cpf         String? @unique
+  email       String  @unique
+  telefone    String  @unique
+  cep         String?
+  rua         String?
+  numero      String?
+  complemento String?
+  bairro      String?
+  cidade      String?
+  estado      String?
+  senha       String
 
   carrinho Carrinho[]
 
-  data_criacao   DateTime @default(now())
-  data_alteracao DateTime @updatedAt
+  creation_date DateTime @default(now())
+  update_date   DateTime @updatedAt
 
   @@map("usuarios")
 }
 
 model Produtos {
-  id          String  @id @default(uuid())
-  nome        String
-  descricao   String
-  preco       String
-  altura      String?
-  largura     String?
-  comprimento String?
-  peso        String?
-  banner      String
+  id        String  @id @default(uuid())
+  banner    String?
+  nome      String
+  descricao String?
+  preco     String
 
   itens ItensCarrinho[]
 
-  data_criacao   DateTime @default(now())
-  data_alteracao DateTime @updatedAt
+  cration_date DateTime @default(now())
+  update_date  DateTime @updatedAt
 
   @@map("produtos")
 }
@@ -57,7 +55,7 @@ model Carrinho {
   id          String   @id @default(uuid())
   n_pedido    Int      @unique @default(autoincrement())
   valor_total Decimal? @db.Decimal(9, 2)
-  status      String   @default("Aguardando")
+  status      String   @default("Aberto")
   draft       Boolean  @default(true)
   entrega     Boolean  @default(false)
   aceito      Boolean  @default(false)
