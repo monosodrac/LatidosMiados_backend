@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { ProdutosServices } from '../../Services/Produtos/ProdutosServices'
 
-
 class ProdutosControllers {
     async cadastrarProdutos(req: Request, res: Response) {
         const { nome, descricao, preco } = req.body

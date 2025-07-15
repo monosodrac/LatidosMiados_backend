@@ -31,8 +31,10 @@ router.post('/ConsultarProdutosUnico', new ProdutosControllers().consultarProdut
 
 //Rotas de Pedidos
 router.post('/RealizarPedidos', new PedidosControllers().criarPedidos);
-router.post('/AdicionarItensPedidos', new PedidosControllers().adcionarItensPedido);
+router.post('/AdicionarItensPedidos', new PedidosControllers().adicionarItensPedido);
 router.get('/BuscarPedidosCliente', estaAutenticado, new PedidosControllers().buscarPedidosCliente);
+router.get('/BuscarCarrinhoAbertoDoUsuario', estaAutenticado, new PedidosControllers().buscarCarrinhoAbertoDoUsuario);
+router.delete('/ApagarItensCarrinho/:id', estaAutenticado, new PedidosControllers().apagarItensCarrinho);
 router.delete('/ApagarCarrinho/:id', estaAutenticado, new PedidosControllers().apagarCarrinho);
 router.post('/visualizaPedidoClienteUnico', estaAutenticado, new PedidosControllers().visualizaPedidoClienteUnico);
 

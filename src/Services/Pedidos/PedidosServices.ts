@@ -1,32 +1,21 @@
 import prismaClient from '../../Prisma';
 
-
 interface CriarPedidos {
     id_usuario: string
     id_produto: string
     valor: number
+    quantidade: number
 };
 
 interface AdicionarItensPedidos {
     id_produto: string
     id_carrinho: string
     valor: number
-};
-
-interface cadCalFrete {
-    id: string
-    from: string
-    to: string
-    width: number
-    height: number
-    weight: number
-    length: number
-    insurance_value: number
-    quantity: number
+    quantidade: number
 };
 
 class PedidosServices {
-    async criarPedidos({ id_usuario, id_produto, valor }: CriarPedidos) {
+    async criarPedidos({ id_usuario, id_produto, valor, quantidade }: CriarPedidos) {
 
         const pedidoAberto = await prismaClient.carrinho.findFirst({
             where: {
@@ -48,13 +37,14 @@ class PedidosServices {
             data: {
                 id_carrinho: resposta.id,
                 id_produto: id_produto,
-                valor: valor
+                valor: valor,
+                quantidade: quantidade,
             }
         });
         return resposta;
     };
 
-    async adcionarItensPedido({ id_produto, id_carrinho, valor }: AdicionarItensPedidos) {
+    async adicionarItensPedido({ id_produto, id_carrinho, valor, quantidade }: AdicionarItensPedidos) {
         const produtoExiste = await prismaClient.itensCarrinho.findFirst({
             where: {
                 id_produto: id_produto
@@ -69,7 +59,8 @@ class PedidosServices {
             data: {
                 id_produto: id_produto,
                 id_carrinho: id_carrinho,
-                valor: valor
+                valor: valor,
+                quantidade: quantidade
             }
         });
         return ({ dados: 'Item Adicionado Com Sucesso' });
@@ -86,6 +77,20 @@ class PedidosServices {
         return resposta;
     };
 
+    async buscarCarrinhoAbertoDoUsuario(id_usuario: string) {
+        const pedido = await prismaClient.carrinho.findFirst({
+            where: {
+                id_usuario,
+                status: 'aberto'
+            },
+            include: {
+                itens: true
+            }
+        });
+
+        return pedido;
+    };
+
     async visualizaPedidoClienteUnico(id: string) {
         const resposta = await prismaClient.carrinho.findFirst({
             where: {
@@ -100,7 +105,8 @@ class PedidosServices {
                         valor: true,
                         produtos: {
                             select: {
-                                nome: true
+                                nome: true,
+                                banner: true,
                             }
                         }
                     }
@@ -117,6 +123,15 @@ class PedidosServices {
             }
         });
         return ({ dados: 'Carrinho apagado com sucesso' });
+    };
+
+    async apagarItensCarrinho(id: string) {
+        await prismaClient.itensCarrinho.delete({
+            where: {
+                id: id
+            }
+        });
+        return ({ dados: 'Item apagado com sucesso' });
     };
 };
 
