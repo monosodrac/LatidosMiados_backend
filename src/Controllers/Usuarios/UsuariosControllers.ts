@@ -37,7 +37,7 @@ class UsuariosControllers {
     }
 
     async alterarDadosUsuarios(req: Request, res: Response) {
-        const { id, nome, email, cep, rua, numero, bairro, cidade, uf } = req.body
+        const { id, nome, email, cep, rua, numero, complemento, bairro, cidade, uf } = req.body
         const enviarDadosServices = new UsuariosServices()
         const resposta = await enviarDadosServices.alterarDadosUsuarios({
             id,
@@ -45,6 +45,7 @@ class UsuariosControllers {
             email,
             cep,
             rua,
+            complemento,
             numero,
             bairro,
             cidade,

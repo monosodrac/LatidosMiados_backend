@@ -8,6 +8,7 @@ interface cadUsuarios {
     cep?: string
     rua?: string
     numero?: string
+    complemento?: string
     bairro?: string
     cidade?: string
     uf?: string
@@ -22,13 +23,14 @@ interface AlterarUsuarios {
     cep: string
     rua: string
     numero: string
+    complemento: string
     bairro: string
     cidade: string
     uf: string
 }
 
 class UsuariosServices {
-    async cadastrarUsuarios({ nome, email, telefone, cep, rua, numero, bairro, cidade, uf, password, foto }: cadUsuarios) {
+    async cadastrarUsuarios({ nome, email, telefone, cep, rua, numero, complemento, bairro, cidade, uf, password, foto }: cadUsuarios) {
 
         const senhaCrypt = await hash(password, 8)
         await prismaClient.usuarios.create({
@@ -39,6 +41,7 @@ class UsuariosServices {
                 cep: cep,
                 rua: rua,
                 numero: numero,
+                complemento: complemento,
                 bairro: bairro,
                 cidade: cidade,
                 estado: uf,
@@ -73,11 +76,14 @@ class UsuariosServices {
                 id: id
             },
             select: {
+                id: true,
                 nome: true,
                 email: true,
+                telefone: true,
                 cep: true,
                 rua: true,
                 numero: true,
+                complemento: true,
                 bairro: true,
                 cidade: true,
                 estado: true,
@@ -88,7 +94,7 @@ class UsuariosServices {
         return resposta
     }
 
-    async alterarDadosUsuarios({ id, nome, email, cep, rua, numero, bairro, cidade, uf }: AlterarUsuarios) {
+    async alterarDadosUsuarios({ id, nome, email, cep, rua, numero, complemento, bairro, cidade, uf }: AlterarUsuarios) {
         await prismaClient.usuarios.update({
             where: {
                 id: id
@@ -99,6 +105,7 @@ class UsuariosServices {
                 cep: cep,
                 rua: rua,
                 numero: numero,
+                complemento: complemento,
                 bairro: bairro,
                 cidade: cidade,
                 estado: uf,
