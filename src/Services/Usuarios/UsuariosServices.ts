@@ -3,6 +3,7 @@ import { hash } from 'bcryptjs'
 
 interface cadUsuarios {
     nome: string,
+    cpf: string,
     email: string,
     telefone: string,
     cep?: string
@@ -19,7 +20,9 @@ interface cadUsuarios {
 interface AlterarUsuarios {
     id: string,
     nome: string,
+    cpf: string,
     email: string
+    telefone: string,
     cep: string
     rua: string
     numero: string
@@ -30,12 +33,13 @@ interface AlterarUsuarios {
 }
 
 class UsuariosServices {
-    async cadastrarUsuarios({ nome, email, telefone, cep, rua, numero, complemento, bairro, cidade, uf, password, foto }: cadUsuarios) {
+    async cadastrarUsuarios({ nome, cpf, email, telefone, cep, rua, numero, complemento, bairro, cidade, uf, password, foto }: cadUsuarios) {
 
         const senhaCrypt = await hash(password, 8)
         await prismaClient.usuarios.create({
             data: {
                 nome: nome,
+                cpf: cpf,
                 email: email,
                 telefone: telefone,
                 cep: cep,
@@ -57,6 +61,8 @@ class UsuariosServices {
             select: {
                 id: true,
                 nome: true,
+                cpf: true,
+                telefone: true,
                 email: true,
                 cep: true,
                 rua: true,
@@ -78,6 +84,7 @@ class UsuariosServices {
             select: {
                 id: true,
                 nome: true,
+                cpf: true,
                 email: true,
                 telefone: true,
                 cep: true,
@@ -94,14 +101,16 @@ class UsuariosServices {
         return resposta
     }
 
-    async alterarDadosUsuarios({ id, nome, email, cep, rua, numero, complemento, bairro, cidade, uf }: AlterarUsuarios) {
+    async alterarDadosUsuarios({ id, nome, cpf, email, telefone, cep, rua, numero, complemento, bairro, cidade, uf }: AlterarUsuarios) {
         await prismaClient.usuarios.update({
             where: {
                 id: id
             },
             data: {
                 nome: nome,
+                cpf: cpf,
                 email: email,
+                telefone: telefone,
                 cep: cep,
                 rua: rua,
                 numero: numero,

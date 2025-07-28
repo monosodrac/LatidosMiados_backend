@@ -4,12 +4,13 @@ import { UsuariosServices } from '../../Services/Usuarios/UsuariosServices'
 
 class UsuariosControllers {
     async cadastrarUsuarios(req: Request, res: Response) {
-        const { nome, email, telefone, cep, rua, numero, bairro, cidade, uf, password } = req.body;
+        const { nome, cpf, email, telefone, cep, rua, numero, bairro, cidade, uf, password } = req.body;
         const foto = req.file ? req.file.filename : null;
         const enviarDadosServices = new UsuariosServices()
         const resposta = await enviarDadosServices.cadastrarUsuarios({
             foto,
             nome,
+            cpf,
             email,
             telefone,
             cep,
@@ -37,12 +38,14 @@ class UsuariosControllers {
     }
 
     async alterarDadosUsuarios(req: Request, res: Response) {
-        const { id, nome, email, cep, rua, numero, complemento, bairro, cidade, uf } = req.body
+        const { id, nome, cpf, email, telefone, cep, rua, numero, complemento, bairro, cidade, uf } = req.body
         const enviarDadosServices = new UsuariosServices()
         const resposta = await enviarDadosServices.alterarDadosUsuarios({
             id,
             nome,
+            cpf,
             email,
+            telefone,
             cep,
             rua,
             complemento,
