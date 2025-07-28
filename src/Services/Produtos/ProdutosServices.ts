@@ -2,16 +2,18 @@ import prismaClient from '../../Prisma'
 
 interface CadProdutos {
     nome: string
+    pet: string
     descricao?: string
     preco: string
     banner: string
 }
 
 class ProdutosServices {
-    async cadastrarProdutos({nome, preco, descricao, banner}: CadProdutos){
+    async cadastrarProdutos({nome, pet, preco, descricao, banner}: CadProdutos){
         await prismaClient.produtos.create({
             data: {
                 nome: nome,
+                pet: pet,
                 descricao: descricao,
                 preco: preco,
                 banner: banner

@@ -3,7 +3,7 @@ import { ProdutosServices } from '../../Services/Produtos/ProdutosServices'
 
 class ProdutosControllers {
     async cadastrarProdutos(req: Request, res: Response) {
-        const { nome, descricao, preco } = req.body
+        const { nome, pet, descricao, preco } = req.body
         // console.log(req.file)
         if(!req.file){
             throw new Error('Imagem com problemas')
@@ -12,6 +12,7 @@ class ProdutosControllers {
             const enviaDadosServices = new ProdutosServices()
             const resposta = await enviaDadosServices.cadastrarProdutos({
                 nome,
+                pet,
                 descricao,
                 preco,
                 banner

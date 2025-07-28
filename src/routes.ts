@@ -9,6 +9,7 @@ import { ProdutosControllers } from './Controllers/Produtos/ProdutosControllers'
 import { PedidosControllers } from "./Controllers/Pedidos/PedidosControllers";
 
 import { estaAutenticado } from './middleware/estaAutenticado';
+import { PetControllers } from './Controllers/Pet/PetControllers';
 
 const router = Router();
 const upload = multer(uploadConfig.upload('./tmp'))
@@ -25,9 +26,12 @@ router.post('/LoginUsuarios', new LoginUsuariosControllers().loginUsuarios);
 router.get('/VerificaToken', estaAutenticado, new LoginUsuariosControllers().verificaToken);
 
 //Rotas de Produtos
-router.post('/CadastrarProdutos', upload.single('file'), estaAutenticado, new ProdutosControllers().cadastrarProdutos)
+router.post('/CadastrarProdutos', upload.single('file'), new ProdutosControllers().cadastrarProdutos)
 router.get('/ConsultarProdutos', new ProdutosControllers().consultarProdutos);
 router.post('/ConsultarProdutosUnico', new ProdutosControllers().consultarProdutosUnico);
+//Rotas de Pet
+router.post('/CadastrarPet', new PetControllers().cadastrarPet);
+router.get('/ListarPet', new PetControllers().listarPet);
 
 //Rotas de Pedidos
 router.post('/RealizarPedidos', new PedidosControllers().criarPedidos);

@@ -40,8 +40,11 @@ model Produtos {
   id        String  @id @default(uuid())
   banner    String?
   nome      String
+  pet       String
   descricao String?
   preco     String
+  Pet       Pet?    @relation(fields: [idPet], references: [id])
+  idPet     String?
 
   itens ItensCarrinho[]
 
@@ -49,6 +52,18 @@ model Produtos {
   update_date  DateTime @updatedAt
 
   @@map("produtos")
+}
+
+model Pet {
+  id   String @id @default(uuid())
+  nome String
+
+  data_criacao   DateTime @default(now())
+  data_alteracao DateTime @updatedAt
+
+  produtos Produtos[]
+
+  @@map("pet")
 }
 
 model Carrinho {
