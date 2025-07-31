@@ -13,6 +13,8 @@ interface cadUsuarios {
     bairro?: string
     cidade?: string
     uf?: string
+    latitude?: number
+    longitude?: number
     password: string
     foto?: string
 }
@@ -30,11 +32,18 @@ interface AlterarUsuarios {
     bairro: string
     cidade: string
     uf: string
+    latitude?: number
+    longitude?: number
+}
+
+interface LocalizacaoRequest {
+    id_usuario: string;
+    latitude: number;
+    longitude: number;
 }
 
 class UsuariosServices {
     async cadastrarUsuarios({ nome, cpf, email, telefone, cep, rua, numero, complemento, bairro, cidade, uf, password, foto }: cadUsuarios) {
-
         const senhaCrypt = await hash(password, 8)
         await prismaClient.usuarios.create({
             data: {
@@ -130,7 +139,21 @@ class UsuariosServices {
             }
         })
         return ({ dados: 'Registro Apagado com Sucesso' })
-    }
-}
+    };
 
-export { UsuariosServices }
+    async atualizarLocalizacao({ id_usuario, latitude, longitude }: LocalizacaoRequest) {
+        const usuario = await prismaClient.usuarios.update({
+            where: {
+                id: id_usuario
+            },
+            data: {
+                latitude,
+                longitude
+            }
+        });
+
+        return usuario;
+    }
+};
+
+export { UsuariosServices };

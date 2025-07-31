@@ -42,4 +42,7 @@ router.delete('/ApagarItensCarrinho/:id', estaAutenticado, new PedidosController
 router.delete('/ApagarCarrinho/:id', estaAutenticado, new PedidosControllers().apagarCarrinho);
 router.post('/visualizaPedidoClienteUnico', estaAutenticado, new PedidosControllers().visualizaPedidoClienteUnico);
 
+//Rotas de Pedidos
+router.put('/AtualizarLocalizacaoUsuario', estaAutenticado, new UsuariosControllers().atualizarLocalizacao);
+
 export default router;

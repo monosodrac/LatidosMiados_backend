@@ -101,6 +101,7 @@ class PedidosServices {
                 n_pedido: true,
                 itens: {
                     select: {
+                        id: true,
                         quantidade: true,
                         valor: true,
                         produtos: {

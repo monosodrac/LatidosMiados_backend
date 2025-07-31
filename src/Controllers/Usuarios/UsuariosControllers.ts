@@ -53,16 +53,30 @@ class UsuariosControllers {
             bairro,
             cidade,
             uf,
-        })
-        return res.json(resposta)
-    }
+        });
+        return res.json(resposta);
+    };
 
     async apagarUsuarios(req: Request, res: Response) {
-        const { id } = req.params
-        const enviarDadosServices = new UsuariosServices()
-        const resposta = await enviarDadosServices.apagarUsuarios(id)
-        return res.json(resposta)
-    }
-}
+        const { id } = req.params;
+        const enviarDadosServices = new UsuariosServices();
+        const resposta = await enviarDadosServices.apagarUsuarios(id);
+        return res.json(resposta);
+    };
+
+    async atualizarLocalizacao(req: Request, res: Response) {
+        const id_usuario = req.usuarioId;
+        const { latitude, longitude } = req.body;
+    
+        const enviarDadosServices = new UsuariosServices();
+        const usuario = await enviarDadosServices.atualizarLocalizacao({
+            id_usuario,
+            latitude,
+            longitude
+        });
+    
+        return res.json({ message: 'Localização atualizada com sucesso!', usuario });
+    };
+};
 
 export { UsuariosControllers }

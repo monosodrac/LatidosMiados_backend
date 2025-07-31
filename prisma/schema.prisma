@@ -26,6 +26,8 @@ model Usuarios {
   bairro      String?
   cidade      String?
   estado      String?
+  latitude    Float?
+  longitude   Float?
   senha       String
 
   carrinho Carrinho[]
