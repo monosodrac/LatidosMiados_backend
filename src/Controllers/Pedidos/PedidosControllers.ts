@@ -66,6 +66,18 @@ class PedidosControllers {
         const resposta = await enviaDadosServices.apagarCarrinho(id);
         return res.json(resposta);
     };
+
+    async finalizarCarrinho(req: Request, res: Response) {
+        const { id } = req.body; // ou `req.params.id` se quiser enviar pela URL
+        const enviaDadosServices = new PedidosServices();
+        
+        try {
+            const resposta = await enviaDadosServices.finalizarCarrinho(id);
+            return res.json(resposta);
+        } catch (error) {
+            return res.status(400).json({ error: error.message });
+        }
+    };    
 };
 
 export { PedidosControllers };

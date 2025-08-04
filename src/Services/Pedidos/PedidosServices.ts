@@ -81,7 +81,7 @@ class PedidosServices {
         const pedido = await prismaClient.carrinho.findFirst({
             where: {
                 id_usuario,
-                status: 'aberto'
+                status: 'Aberto'
             },
             include: {
                 itens: true
@@ -134,6 +134,49 @@ class PedidosServices {
         });
         return ({ dados: 'Item apagado com sucesso' });
     };
+
+    async finalizarCarrinho(id: string) {
+        // Verifica se o carrinho existe e carrega os itens
+    const carrinho = await prismaClient.carrinho.findUnique({
+        where: { id },
+        include: {
+            itens: true
+        }
+    });
+
+    if (!carrinho) {
+        throw new Error('Carrinho não encontrado');
+    }
+
+    if (carrinho.status.toLowerCase() === 'finalizado') {
+        throw new Error('Carrinho já está finalizado');
+    }
+
+    if (carrinho.itens.length === 0) {
+        throw new Error('Carrinho não possui itens');
+    }
+
+    // Calcular o valor total dos itens
+    const valor_total = carrinho.itens.reduce((total, item) => {
+        const valor = Number(item.valor) || 0;
+        const quantidade = item.quantidade || 1;
+        return total + valor * quantidade;
+    }, 0);
+
+    // Atualizar o carrinho
+    const carrinhoAtualizado = await prismaClient.carrinho.update({
+        where: { id },
+        data: {
+            valor_total: valor_total,
+            status: "Finalizado",
+            draft: false,
+            aceito: true,
+            entrega: true
+        }
+    });
+    
+        return carrinhoAtualizado;
+    }
 };
 
 export { PedidosServices };

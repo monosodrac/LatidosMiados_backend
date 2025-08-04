@@ -40,9 +40,10 @@ router.get('/BuscarPedidosCliente', estaAutenticado, new PedidosControllers().bu
 router.get('/BuscarCarrinhoAbertoDoUsuario', estaAutenticado, new PedidosControllers().buscarCarrinhoAbertoDoUsuario);
 router.delete('/ApagarItensCarrinho/:id', estaAutenticado, new PedidosControllers().apagarItensCarrinho);
 router.delete('/ApagarCarrinho/:id', estaAutenticado, new PedidosControllers().apagarCarrinho);
+router.put('/FinalizarCarrinho', estaAutenticado, new PedidosControllers().finalizarCarrinho);
 router.post('/visualizaPedidoClienteUnico', estaAutenticado, new PedidosControllers().visualizaPedidoClienteUnico);
 
-//Rotas de Pedidos
+//Rotas de Localizacao
 router.put('/AtualizarLocalizacaoUsuario', estaAutenticado, new UsuariosControllers().atualizarLocalizacao);
 
 export default router;
