@@ -47,12 +47,25 @@ class PedidosServices {
     async adicionarItensPedido({ id_produto, id_carrinho, valor, quantidade }: AdicionarItensPedidos) {
         const produtoExiste = await prismaClient.itensCarrinho.findFirst({
             where: {
-                id_produto: id_produto
+                id_produto: id_produto,
+                id_carrinho: id_carrinho,
             }
         });
 
+        // console.log(id_produto, id_carrinho, valor, quantidade);
         if (produtoExiste) {
-            throw new Error('Produto Já Adicionado no Carrinho')
+            const novaQuantidade = produtoExiste.quantidade + quantidade;
+            const novoValor = Number(valor) + valor;
+        
+            await prismaClient.itensCarrinho.update({
+                where: { id: produtoExiste.id },
+                data: {
+                    quantidade: novaQuantidade,
+                    valor: novoValor
+                }
+            });
+        
+            return { dados: 'Quantidade atualizada com sucesso' };
         };
 
         await prismaClient.itensCarrinho.create({

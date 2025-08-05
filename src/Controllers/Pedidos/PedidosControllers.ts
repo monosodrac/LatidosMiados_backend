@@ -68,7 +68,7 @@ class PedidosControllers {
     };
 
     async finalizarCarrinho(req: Request, res: Response) {
-        const { id } = req.body; // ou `req.params.id` se quiser enviar pela URL
+        const { id } = req.body;
         const enviaDadosServices = new PedidosServices();
         
         try {

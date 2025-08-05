@@ -39,7 +39,7 @@ router.post('/AdicionarItensPedidos', new PedidosControllers().adicionarItensPed
 router.get('/BuscarPedidosCliente', estaAutenticado, new PedidosControllers().buscarPedidosCliente);
 router.get('/BuscarCarrinhoAbertoDoUsuario', estaAutenticado, new PedidosControllers().buscarCarrinhoAbertoDoUsuario);
 router.delete('/ApagarItensCarrinho/:id', estaAutenticado, new PedidosControllers().apagarItensCarrinho);
-router.delete('/ApagarCarrinho/:id', estaAutenticado, new PedidosControllers().apagarCarrinho);
+router.delete('/ApagarCarrinho/:id', new PedidosControllers().apagarCarrinho);
 router.put('/FinalizarCarrinho', estaAutenticado, new PedidosControllers().finalizarCarrinho);
 router.post('/visualizaPedidoClienteUnico', estaAutenticado, new PedidosControllers().visualizaPedidoClienteUnico);
 
